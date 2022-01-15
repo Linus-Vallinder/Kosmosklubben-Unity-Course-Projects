@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Jump Options")]
     [SerializeField] private float JumpPower;
+
     [Space, SerializeField] private float fallMultiplier;
     [SerializeField] private float jumpMultiplier;
 
@@ -25,7 +26,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(jumpKey))
+        if (PlayerController.instance.isDead)
+        {
+            rb2d.constraints = RigidbodyConstraints2D.None;
+        }
+
+        if (Input.GetKeyDown(jumpKey) && PlayerController.instance.isDead == false)
         {
             Jump();
         }
@@ -38,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb2d.gravityScale = jumpMultiplier;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        PlayerController.instance.Die();
     }
 
     #endregion Unity Methods

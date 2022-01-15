@@ -4,6 +4,7 @@ public class Obstacle : MonoBehaviour
 {
     [Header("Obstacle Options")]
     [SerializeField] private float scrollSpeed;
+
     [SerializeField] private float despawnDistance;
 
     #region Unity Methods
@@ -18,11 +19,11 @@ public class Obstacle : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            print("Point");
+            GameManager.instance.score++;
         }
     }
 
-    #endregion
+    #endregion Unity Methods
 
     #region Scrolling
 
@@ -31,15 +32,19 @@ public class Obstacle : MonoBehaviour
         transform.Translate(-transform.right * scrollSpeed * Time.deltaTime);
     }
 
-    #endregion
+    #endregion Scrolling
+
+    #region Spawning
 
     private void Despawner()
     {
-        if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) >= despawnDistance)
+        if (Vector3.Distance(transform.position, Vector3.zero) >= despawnDistance)
         {
             Destroy(gameObject);
         }
     }
+
+    #endregion Spawning
 
     public void InitObstacle(Vector2 spawnYRange)
     {

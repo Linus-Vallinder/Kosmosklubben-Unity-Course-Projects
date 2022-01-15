@@ -8,12 +8,19 @@ public class ObstacleSpawner : MonoBehaviour
 
     [Header("Spawning Options")]
     [SerializeField] private Vector2 spawningTimeRange;
+
     [SerializeField] private Vector2 spawningHeightRange;
+
+    #region Unity Methods
 
     private void Start()
     {
         StartCoroutine(Spawner());
     }
+
+    #endregion
+
+    #region Spawning
 
     private IEnumerator Spawner()
     {
@@ -29,9 +36,11 @@ public class ObstacleSpawner : MonoBehaviour
         var clone = Instantiate(obstaclePrefab, new Vector3(10, 0, 0), Quaternion.identity);
         Obstacle obstacle = clone.GetComponent<Obstacle>();
 
-        if(obstacle != null)
+        if (obstacle != null)
         {
             obstacle.InitObstacle(spawningHeightRange);
         }
     }
+
+    #endregion
 }

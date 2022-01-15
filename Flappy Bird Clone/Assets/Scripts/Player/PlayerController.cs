@@ -1,10 +1,16 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
 
     private PlayerMovement playerMovement;
+
+    [HideInInspector] public bool isDead = false;
+
+    [Header("Events")]
+    public UnityEvent OnDeath;
 
     #region Unity Methods
 
@@ -22,4 +28,14 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion Unity Methods
+
+    #region Death
+
+    public void Die()
+    {
+        OnDeath.Invoke();
+        isDead = true;
+    }
+
+    #endregion
 }
